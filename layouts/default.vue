@@ -56,9 +56,35 @@
                 </nuxt-link>
               </div>
               <div class="d-flex">
-                <nuxt-link to="/auth/signout">
+                <a @click="dialogSettings = true">
                   <v-icon>mdi-cog-outline</v-icon>&nbsp;&nbsp;<b>Settings</b>
-                </nuxt-link>
+                </a>
+                <v-dialog v-model="dialogSettings" persistent max-width="600px">
+                  <v-card elevation="0">
+                    <v-card-title>
+                      <span class="headline">Settings</span>
+                    </v-card-title>
+                    <v-toolbar
+                      flat
+                      height="72"
+                    >
+                      <v-switch
+                        v-model="$vuetify.theme.dark"
+                        inset
+                        label="Dark Theme"
+                        persistent-hint
+                      ></v-switch>
+                    </v-toolbar>
+
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn color="blue darken-1" text @click="dialogSettings = false">
+                        Close
+                      </v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
+
               </div>
             </div>
           </v-container>
@@ -74,20 +100,31 @@
   export default {
     data() {
       return {
-        drawer: false
+        drawer: false,
+        dialogSettings: false,
       }
     },
   }
 </script>
 
 <style lang="scss" scoped>
+  .v-card-container {
+    padding: 0 20px;
+  }
+
   .v-application a {
     text-decoration: none;
-    color: $yellow;
   }
 
   .menu-items a {
     padding: 10px 0px 10px 3px;
     font-size: 24px;
+  }
+
+  .card-subtitle {
+    display: block;
+    margin: 10px 0 2px;
+    font-size: 16px;
+    color: #000000;
   }
 </style>
