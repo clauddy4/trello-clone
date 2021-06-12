@@ -5,7 +5,7 @@
       <!-- <div class="d-none d-md-block"></div> -->
       <!-- mobile -->
       <div class="d-block">
-        <v-container fluid class="jello-topbar">
+        <v-container fluid class="accent">
           <v-row no-gutters align="center" justify="start">
             <v-col cols="1" class="flex-grow-0 flex-shrink-0">
               <v-icon @click="drawer = true">mdi-menu</v-icon>
@@ -55,6 +55,11 @@
                   <v-icon>mdi-exit-to-app</v-icon>&nbsp;&nbsp;<b>Sign out</b>
                 </nuxt-link>
               </div>
+              <div class="d-flex">
+                <nuxt-link to="/auth/signout">
+                  <v-icon>mdi-cog-outline</v-icon>&nbsp;&nbsp;<b>Settings</b>
+                </nuxt-link>
+              </div>
             </div>
           </v-container>
         </v-navigation-drawer>
@@ -76,11 +81,12 @@
 </script>
 
 <style lang="scss" scoped>
-  a {
+  .v-application a {
     text-decoration: none;
+    color: $yellow;
   }
+
   .menu-items a {
-    color: $text-color;
     padding: 10px 0px 10px 3px;
     font-size: 24px;
   }

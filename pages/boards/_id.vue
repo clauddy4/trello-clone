@@ -10,17 +10,6 @@
     "
   >
     <div class="d-block">
-      <v-container fluid class="jello-topbar">
-        <div class="d-flex justify-space-between">
-          <v-icon @click="drawer = true">mdi-menu</v-icon>
-          <nuxt-link to="/">
-            <v-row no-gutters align="center" justify="space-between">
-              <h3 class="logo">Jello</h3>
-            </v-row>
-          </nuxt-link>
-          <v-icon small @click="deleteBoard()">mdi-delete-outline</v-icon>
-        </div>
-      </v-container>
       <v-navigation-drawer
         v-model="drawer"
         fixed
@@ -33,7 +22,7 @@
 
             <v-row no-gutters align="center" justify="end">
               <p class="jello-user">
-                Signed in as<br />
+                Signed in as<br/>
                 {{ $nuxt.$fire.auth.currentUser.email }}
               </p>
               &nbsp;
@@ -44,11 +33,12 @@
         <v-container class="d-block menu-items">
           <div class="d-flex flex-column">
             <div class="d-flex">
-              <br />
+              <br/>
             </div>
             <div class="d-flex">
               <nuxt-link to="/">
-                <v-icon>mdi-view-dashboard-variant-outline</v-icon
+                <v-icon>mdi-view-dashboard-variant-outline
+                </v-icon
                 >&nbsp;&nbsp;<b>My Boards</b>
               </nuxt-link>
             </div>
@@ -61,7 +51,12 @@
         </v-container>
       </v-navigation-drawer>
     </div>
-    <h1>{{ board.title }}</h1>
+
+    <div class="d-flex flex-row justify-space-between">
+      <h1>{{ board.title }}</h1>
+      <v-icon small @click="deleteBoard()">mdi-delete-outline</v-icon>
+    </div>
+
     <small>created {{ board.dateCreated | formatDate }}</small>
     <div class="d-flex flex-row pr-6 pt-3">
       <div
@@ -86,7 +81,7 @@
           @click="editCard(card)"
           v-bind:key="card.id"
         >
-          <v-card-text> {{ card.title }} </v-card-text>
+          <v-card-text> {{ card.title }}</v-card-text>
         </v-card>
 
 
@@ -97,7 +92,8 @@
             listId = list.id
           "
           class="mt-auto"
-        >Add card</v-btn
+        >Add card
+        </v-btn
         >
       </div>
       <v-dialog v-model="dialogCard" persistent max-width="600px">
@@ -131,7 +127,8 @@
       </v-dialog>
       <div class="d-flex flex-row">
         <v-btn depressed @click="dialog = true" class="create-list"
-        >Create new list</v-btn
+        >Create new list
+        </v-btn
         >
         <v-dialog v-model="dialog" persistent max-width="600px">
           <v-card elevation="0">
@@ -201,16 +198,17 @@
 
 <script>
   import { v4 as uuidv4 } from 'uuid'
+
   export default {
-    layout: 'board',
+    layout: 'default',
     data() {
       return {
         listId: '',
         list: {
-          title: '',
+          title: ''
         },
         card: {
-          title: '',
+          title: ''
         },
         currentCard: {},
         cardDraggedId: '',
@@ -218,7 +216,7 @@
         dialog: false,
         dialogCard: false,
         dialogEditCard: false,
-        drawer: false,
+        drawer: false
       }
     },
     async asyncData({ params }) {
@@ -231,13 +229,14 @@
       let boardData = {}
       await boardRef
         .get()
-        .then(function (doc) {
+        .then(function(doc) {
           if (doc.exists) {
             boardData = doc.data()
             boardData.id = params.id
           }
         })
-        .catch(function (error) {})
+        .catch(function(error) {
+        })
       // if (boardData.color != '' || boardData.image.downloadURL != '') {
       //   $nuxt.$emit('toggle-alt-topbar')
       // }
@@ -324,22 +323,22 @@
         ev.preventDefault()
         this.updateCardList(listId)
       },
-      async deleteList(listId){
+      async deleteList(listId) {
         let that = this
         let index = -1
         let count = 0
         for (const list of that.board.lists) {
-          if(list.id == listId) {
+          if (list.id == listId) {
             index = count
           }
           count++
         }
-        if(index > -1) {
+        if (index > -1) {
           that.board.lists.splice(index, 1)
           await that.updateBoard()
         }
       },
-      async createCard(){
+      async createCard() {
         let that = this
         that.dialogCard = false
         //show modal to capture card name
@@ -374,7 +373,7 @@
           that.listId = ''
         }
       },
-      editCard(card){
+      editCard(card) {
         this.dialogEditCard = true
         this.currentCard = card
       },
@@ -400,7 +399,7 @@
         let j = 0
         let index = {
           list: -1,
-          card: -1,
+          card: -1
         }
         for (const list of that.board.lists) {
           if (that.currentCard.listId === list.id) {
@@ -445,7 +444,7 @@
           .doc(that.board.id)
           .update(that.board, { merge: true })
       }
-    },
+    }
   }
 </script>
 
@@ -454,6 +453,7 @@
     padding: 12px;
     height: 100vh;
     overflow: scroll;
+
     .list {
       min-width: 250px;
       background-color: rgb(228 228 228 / 35%);
@@ -461,17 +461,20 @@
       border-radius: 12px;
       min-height: 70vh;
     }
+
     .create-list {
       background-color: rgb(228 228 228 / 35%);
     }
+
     a {
       text-decoration: none;
     }
+
     .menu-items a {
-      color: $text-color;
       padding: 10px 0px 10px 3px;
       font-size: 24px;
     }
+
     .jello-topbar {
       background-color: rgb(255, 255, 255, 0);
       padding: 0px !important;

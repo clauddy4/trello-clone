@@ -288,7 +288,6 @@
 <style lang="scss">
   .v-dialog {
     border-radius: 15px;
-    background-color: $white;
     padding: 15px;
   }
 
